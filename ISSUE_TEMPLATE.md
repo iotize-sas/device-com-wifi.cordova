@@ -1,13 +1,13 @@
 ﻿<!--
 
-Have you read the plugins' Code of Conduct? By creating an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/tripflex/wifiwizard2/blob/master/CODE_OF_CONDUCT.md
+Have you read the plugins' Code of Conduct? By creating an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/iotize-sas/device-com-wifi.cordova/blob/master/CODE_OF_CONDUCT.md
 
 -->
 
 ### Prerequisites
 
 Check all boxes if you have done the following:
-- [ ] Checked that your issue isn't already filed: https://github.com/tripflex/wifiwizard2/issues
+- [ ] Checked that your issue isn't already filed: https://github.com/iotize-sas/device-com-wifi.cordova/issues
 - [ ] Make sure you fill out the Issue Type below
 
 

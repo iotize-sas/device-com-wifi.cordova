@@ -31,15 +31,15 @@ WifiWizard2 enables Wifi management for both Android and iOS applications within
 
 This project is a fork of the [WifiWizard](https://github.com/hoerresb/WifiWizard) plugin with fixes and updates, as well as patches taken from the [Cordova Network Manager](https://github.com/arsenal942/Cordova-Network-Manager) plugin.
 
-Version 3.0.0+ has undergone a TON of changes from the original fork (version 2.0), and the majority of method/functions have been changed.  You can find the latest release of version 2 on the [2.1.x branch](https://github.com/tripflex/WifiWizard2/tree/2.1.x)
+Version 3.0.0+ has undergone a TON of changes from the original fork (version 2.0), and the majority of method/functions have been changed.  You can find the latest release of version 2 on the [2.1.x branch](https://github.com/iotize-sas/device-com-wifi.cordova/tree/2.1.x)
 
 The recommended version to use is the latest 3+ as that is the version that is actively maintained.
 
 *iOS has limited functionality as Apple's WifiManager equivalent is only available  as a private API. Any app that used these features would not be allowed on the app store.*
 
-**If you are an iOS developer, please consider helping us to resolve the [open iOS issues](https://github.com/tripflex/WifiWizard2/issues/6)**
+**If you are an iOS developer, please consider helping us to resolve the [open iOS issues](https://github.com/iotize-sas/device-com-wifi.cordova/issues/6)**
 
-**If you are an Android developer, please consider helping us to [refactor the current code base](https://github.com/tripflex/WifiWizard2/issues/28)**
+**If you are an Android developer, please consider helping us to [refactor the current code base](https://github.com/iotize-sas/device-com-wifi.cordova/issues/28)**
 
 **If you're a Cordova developer, please consider helping out this project, open a new issue, a PR, or contact me directly**
 
@@ -65,7 +65,7 @@ Promises are handled by the [Cordova PromisesPlugin](https://github.com/vstirbu/
 ## Demo Meteor Project
 To test this plugin as well as provide some example code for others to work off of, I have created an example Meteor project you can find here:
 
-[https://github.com/tripflex/WifiWizard2Demo](https://github.com/tripflex/WifiWizard2Demo)
+[https://github.com/iotize-sas/device-com-wifi.cordovaDemo](https://github.com/iotize-sas/device-com-wifi.cordovaDemo)
 
 This demo has examples of using both async functions (with `async/await` and `try/catch` blocks), as well as non async functions with `.then` and `.catch`
 
@@ -445,29 +445,29 @@ WifiWizard2.enable(ssid, bindAll, waitForConnection)
 
 ## Master
 
-Run ```cordova plugin add https://github.com/tripflex/wifiwizard2```
+Run ```cordova plugin add https://github.com/iotize-sas/device-com-wifi.cordova```
 
 To install from the master branch (latest on GitHub)
 
 To install a specific branch (add `#tag` replacing `tag` with tag from this repo, example:
-```cordova plugin add https://github.com/tripflex/wifiwizard2#v3.1.1```
+```cordova plugin add https://github.com/iotize-sas/device-com-wifi.cordova#v3.1.1```
 
 Find available tags here:
-https://github.com/tripflex/WifiWizard2/tags
+https://github.com/iotize-sas/device-com-wifi.cordova/tags
 
 
 If you are wanting to have the latest and greatest stable version, then run the 'Releases' command below.
 
 ## Releases
-Run ```cordova plugin add cordova-plugin-wifiwizard2```
+Run ```cordova plugin add @iotize/device-com-wifi.cordova```
 
 ## Meteor
 To install and use this plugin in a Meteor project, you have to specify the exact version from NPM repository:
-[https://www.npmjs.com/package/cordova-plugin-wifiwizard2](https://www.npmjs.com/package/cordova-plugin-wifiwizard2)
+[https://www.npmjs.com/package/@iotize/device-com-wifi.cordova](https://www.npmjs.com/package/@iotize/device-com-wifi.cordova)
 
 As of April 4th 2019, the latest version is 3.1.1:
 
-```meteor add cordova:cordova-plugin-wifiwizard2@3.1.1```
+```meteor add cordova:@iotize/device-com-wifi.cordova@3.1.1```
 
 # Errors/Rejections
 Methods now return formatted string errors as detailed below, instead of returning generic error messages.  This allows you to check yourself what specific error was returned, and customize the error message.
@@ -479,12 +479,12 @@ In an upcoming release I may add easy ways to override generic messages, or set 
 # Examples
 
 Please see demo Meteor project for code examples:
-[https://github.com/tripflex/WifiWizard2Demo](https://github.com/tripflex/WifiWizard2Demo)
+[https://github.com/iotize-sas/device-com-wifi.cordovaDemo](https://github.com/iotize-sas/device-com-wifi.cordovaDemo)
 
 ## Ionic/Angular Example (User Provided)
 Props @13546777510 (Angelo Fan) has provided a basic Ionic/Angluar demo app:
 [https://github.com/13546777510/WifiWizard2-Demo](https://github.com/13546777510/WifiWizard2-Demo)
-See issue [#69](https://github.com/tripflex/WifiWizard2/issues/69) regarding this
+See issue [#69](https://github.com/iotize-sas/device-com-wifi.cordova/issues/69) regarding this
 
 I recommend using [ES6 arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) to maintain `this` reference.  This is especially useful if you're using Blaze and Meteor.
 
@@ -552,7 +552,7 @@ Apache 2.0
 - Moved automagically enabling WiFi to `exec` actions (before actions called that require wifi enabled)
 - Added `es6-promise-plugin` cordova dependency to plugin.xml
 - Only return `false` in [Cordova Android](https://cordova.apache.org/docs/en/latest/guide/platforms/android/plugin.html) `execute` when invalid action is called
- [Issue #1](https://github.com/tripflex/WifiWizard2/issues/1)
+ [Issue #1](https://github.com/iotize-sas/device-com-wifi.cordova/issues/1)
 - Added JS doc blocks to JS methods
 - Added Async example code
 

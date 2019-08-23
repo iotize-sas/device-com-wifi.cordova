@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "lib": ["es5", "es2015.promise", "dom", "es2015"],
+      "target": "es5",
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "baseUrl": "./",
+      "paths": {
+        "rxjs": [
+          "node_modules/rxjs/index",
+        ],
+        "rxjs/*": [
+          "node_modules/rxjs/*"
+        ],
+        "@iotize/device-client.js/*": [
+          "node_modules/@iotize/device-client.js/*"
+        ]
+      },
+      "removeComments": true,
+      "sourceMap": true,
+      "inlineSources": true,
+      "noEmitOnError": true,
+      "declaration": true,
+      "outDir": "./dist"
+    },
+    "include": [
+      "./src/www/**/*.ts",
+      "./src/www/*.ts"
+    ]
+  }
