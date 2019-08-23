@@ -1,7 +1,7 @@
 //
 //  Copyright 2019 IoTize SAS Inc.  Licensed under the MIT license. 
 //
-import { Subject, Observable, Subscriber, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, Subscriber, BehaviorSubject, from } from 'rxjs';
 import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/device/scanner/device-scanner';
 import { CordovaInterface, NetworkType } from './cordova-interface';
 import { debug } from './logger';
@@ -36,10 +36,8 @@ export class WifiScanner implements DeviceScanner<CordovaWifiScanResult> {
     /**
      * Launches the scan for BLE devices
      */
-    start(options: DeviceScannerOptions = {}): void {
+    start(options: DeviceScannerOptions = {}): Promise<void> {
         debug("Start Scanning ...");
-        this._isScanning$.next(true);
-
         WifiWizard2.startScan()
             .then(() => {
                 return WifiWizard2.timeout(options.timeout || 10000);
@@ -53,16 +51,21 @@ export class WifiScanner implements DeviceScanner<CordovaWifiScanResult> {
             })
             .catch((err) => {
                 this._isScanning$.next(false);
-                return [];
+                debug('Scan result error', err);
             });
+        return Promise.resolve();
     }
 
-    /**
-     * 
-     */
-    stop() {
+    async stop(): Promise<void> {
         debug("Stop Scanning ...");
-        // TODO
-        // WifiWizard2.stopScan()
+        await this._cancelScan();
+    }
+
+    private async _cancelScan() {
+        let scanResults = await WifiWizard2.getScanResults();
+        if (this._devices$) {
+            this._devices$.next(scanResults);
+        }
+        this._isScanning$.next(false);
     }
 }

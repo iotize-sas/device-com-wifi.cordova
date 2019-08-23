@@ -6,7 +6,6 @@ import { ZeroConf } from './cordova-interface';
 import { CordovaNetworkScanResult } from '../definitions';
 
 declare var cordova: any | undefined;
-declare var zeroconf: ZeroConf;
 
 export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanResult> {
     _hostname: string;
@@ -17,10 +16,14 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
     _services: CordovaNetworkScanResult[] = [];
     _services$ = new Subject<CordovaNetworkScanResult[]>();
     _isRunning = new BehaviorSubject<boolean>(false);
+    zeroconf?: ZeroConf;
 
     constructor() {
         if (typeof cordova != undefined && cordova && cordova.plugins) {
-            zeroconf = cordova.plugins.zeroconf;
+            this.zeroconf = cordova.plugins.zeroconf;
+        }
+        else {
+            throw new Error(`Cordova plugin zeroconf is missing`);
         }
     }
 
@@ -52,37 +55,41 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
         return this._start();
     }
 
-    stop() {
+    stop(): Promise<void>  {
         debug('ZeroConfScanner', 'stop', this.options);
         // zeroconf.close()
-        zeroconf.unwatch(
-            this.options.type
-            , this.options.domain
-            , () => {
-                debug('unwatch stop', this.options);
-            }, (err) => {
-                debug('unwatch error', err);
-            });
-        this._isRunning.next(false);
+        return new Promise<void>((resolve, reject) => {
+            this.zeroconf.unwatch(
+                this.options.type
+                , this.options.domain
+                , () => {
+                    debug('unwatch stop', this.options);
+                    this._isRunning.next(false);
+                    resolve();
+                }, (err) => {
+                    debug('unwatch error', err);
+                    reject(err);
+                });
+        });
     }
 
     getHostname(): Promise<string> {
         return new Promise((resolve) => {
-            zeroconf.getHostname((hostname: string) => {
+            this.zeroconf.getHostname((hostname: string) => {
                 resolve(hostname);
             });
         })
     }
 
-    private async _start() {
+    private async _start(): Promise<any> {
         try {
             // if (!this._hostname) {
             //     this._hostname = await this.getHostname();
             // }
             this._isRunning.next(true);
-            debug('Hostname: ', this._hostname);
+            // debug('Hostname: ', this._hostname);
             debug('Zero conf watch: ', this.options);
-            zeroconf.watch(this.options.type, this.options.domain, (result) => {
+            this.zeroconf.watch(this.options.type, this.options.domain, (result) => {
                 debug('Zero conf result', result);
                 var action = result.action;
                 var service = result.service;
