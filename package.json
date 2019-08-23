@@ -28,7 +28,6 @@
   },
   "scripts": {
     "build": "npm run clean && npm run build:ts && npm run build:webpack",
-    "prepare": "npm run build",
     "watch": "tsc -p ./tsconfig.lib.json -w",
     "build:ts": "tsc -p ./tsconfig.lib.json",
     "build:webpack": "webpack --config webpack.config.js",
