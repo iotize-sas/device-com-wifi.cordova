@@ -39,7 +39,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
         return this._isRunning.value;
     }
 
-    set type(type: string){
+    set type(type: string) {
         this.options.type = type;
     }
 
@@ -55,7 +55,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
         return this._start();
     }
 
-    stop(): Promise<void>  {
+    stop(): Promise<void> {
         debug('ZeroConfScanner', 'stop', this.options);
         // zeroconf.close()
         return new Promise<void>((resolve, reject) => {
@@ -65,6 +65,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
                 , () => {
                     debug('unwatch stop', this.options);
                     this._isRunning.next(false);
+                    this.zeroconf.reInit();
                     resolve();
                 }, (err) => {
                     debug('unwatch error', err);
@@ -86,6 +87,8 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
             // if (!this._hostname) {
             //     this._hostname = await this.getHostname();
             // }
+            this._services = [];
+            this._services$.next(this._services);
             this._isRunning.next(true);
             // debug('Hostname: ', this._hostname);
             debug('Zero conf watch: ', this.options);
@@ -93,14 +96,16 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
                 debug('Zero conf result', result);
                 var action = result.action;
                 var service = result.service;
-                switch (action) {
-                    case 'added':
-                        break;
-                    case 'resolved':
-                        this._onServiceResolved(service);
-                        break;
-                    default:
-                        this._removeService(service);
+                if (service) {
+                    switch (action) {
+                        case 'added':
+                            break;
+                        case 'resolved':
+                            this._onServiceResolved(service);
+                            break;
+                        default:
+                            this._removeService(service);
+                    }
                 }
             });
         }
@@ -126,6 +131,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
     private _onServiceResolved(service: CordovaNetworkScanResult) {
         if (this._findServiceIndex(service) < 0) {
             this._services.push(service);
+            debug('Emit new results: ', this._services);
             this._services$.next(this._services);
         }
     }

@@ -11,6 +11,7 @@ export interface ServiceType {
 }
 
 export interface ZeroConf {
+    reInit(success?: () => void, error?: (err: Error) => void): void;
     unwatch(type: string, domain: string, success: () => void, error: (err: Error) => void): void;
     watch(type: string, domain: string, callack: (result: WatchResultType) => void): void;
     close(): void;

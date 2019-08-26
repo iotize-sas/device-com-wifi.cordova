@@ -40,7 +40,7 @@ export class WifiScanner implements DeviceScanner<CordovaWifiScanResult> {
         debug("Start Scanning ...");
         WifiWizard2.startScan()
             .then(() => {
-                return WifiWizard2.timeout(options.timeout || 10000);
+                return WifiWizard2.timeout(options.timeout || 5000);
             })
             .then(() => {
                 return WifiWizard2.getScanResults();
