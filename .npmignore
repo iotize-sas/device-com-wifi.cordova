@@ -1,0 +1,13 @@
+/src/ios/iOSWifiConnectSwift.swift
+/node_modules/
+.idea/
+test/
+src/www/
+npm-debug.log
+tsconfig.*
+webpack.config.js
+*.tgz
+PULL_REQUEST_TEMPLATE.md
+ISSUE_TEMPLATE.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md

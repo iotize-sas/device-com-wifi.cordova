@@ -2,10 +2,10 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="iotize-device-com-wifi.cordova"
+        id="cordova-plugin-iotize-device-com-wifi"
         version="0.0.1-alpha.1">
 
-    <name>iotize-device-com-wifi.cordova</name>
+    <name>cordova-plugin-iotize-device-com-wifi</name>
     <description>Cordova Wifi Manager for Android and iOS</description>
     <license>Apache 2.0</license>
     <keywords>cordova,network,wifi,phonegap</keywords>
@@ -17,7 +17,7 @@
     </js-module>
 
     <!-- ES6 promise polyfill -->
-    <dependency id="es6-promise-plugin" version="4.1.0" />
+    <!-- <dependency id="es6-promise-plugin" version="4.1.0" /> -->
     <!-- <dependency id="com.scott.serviceDiscovery" version="0.2.0" /> cordova-plugin-discovery -->
     <dependency id="cordova-plugin-zeroconf" version="1.4.0" /> 
     

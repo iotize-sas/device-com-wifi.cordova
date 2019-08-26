@@ -1,9 +1,9 @@
 {
   "name": "@iotize/device-com-wifi.cordova",
-  "version": "0.0.1-alpha.1",
+  "version": "1.0.0-alpha.1",
   "main": "./dist/index.js",
   "cordova": {
-    "id": "iotize-device-com-wifi.cordova",
+    "id": "cordova-plugin-iotize-device-com-wifi",
     "platforms": [
       "android",
       "ios"
@@ -13,8 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/iotize-sas/device-com-wifi.cordova.git"
   },
+  "private": false,
   "author": "IoTize",
-  "license": "Apache 2.0",
+  "license": "MIT",
   "description": "IoTize Cordova plugin for Wifi devices",
   "bugs": {
     "url": "https://github.com/iotize-sas/device-com-wifi.cordova/issues"
