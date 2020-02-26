@@ -1,10 +1,11 @@
-import { WifiComProtocolOptions } from "./definitions";
-import { CordovaInterface } from "./cordova-interface";
-import { debug } from "./logger";
-import { ComProtocol, ComProtocolConnectOptions, ComProtocolDisconnectOptions, ConnectionState } from "@iotize/device-client.js/protocol/api";
-import { QueueComProtocol } from "@iotize/device-client.js/protocol/impl";
-import { Observable, Subscriber, from, of, Subscription } from "rxjs";
-import { share } from "rxjs/operators";
+import { ComProtocol, ComProtocolConnectOptions, ComProtocolDisconnectOptions } from '@iotize/device-client.js/protocol/api';
+import { QueueComProtocol } from '@iotize/device-client.js/protocol/core';
+import { Observable, of, Subscriber, Subscription } from 'rxjs';
+import { share } from 'rxjs/operators';
+
+import { CordovaInterface } from './cordova-interface';
+import { WifiComProtocolOptions } from './definitions';
+import { debug } from './logger';
 
 declare var WifiWizard2: CordovaInterface;
 

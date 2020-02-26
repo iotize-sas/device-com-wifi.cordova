@@ -1,4 +1,4 @@
-import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/device/scanner/device-scanner';
+import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/scanner/api';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 import { debug } from '../logger';

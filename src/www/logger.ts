@@ -1,3 +1,3 @@
-import * as debugFactory from "debug";
+import { createDebugger } from '@iotize/common';
 
-export const debug = debugFactory(`@iotize/device-com-wifi.cordova`);
+export const debug = createDebugger(`@iotize/device-com-mqtt.cordova`);

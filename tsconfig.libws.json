@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.cordovalib.json",
+  "include": [
+    "./src/www/*"
+  ],
+  "exclude": [
+    "./src/www/*.spec.ts"
+  ]
+}

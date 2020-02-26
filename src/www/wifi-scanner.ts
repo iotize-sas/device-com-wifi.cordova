@@ -2,7 +2,7 @@
 //  Copyright 2019 IoTize SAS Inc.  Licensed under the MIT license. 
 //
 import { Subject, Observable, Subscriber, BehaviorSubject, from } from 'rxjs';
-import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/device/scanner/device-scanner';
+import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/scanner/api';
 import { CordovaInterface, NetworkType } from './cordova-interface';
 import { debug } from './logger';
 import { CordovaWifiScanResult } from './definitions';
