@@ -1,75 +1,75 @@
 {
-  "name": "@iotize/device-com-wifi.cordova",
-  "version": "1.0.0-alpha.1",
-  "main": "./dist/index.js",
-  "cordova": {
-    "id": "cordova-plugin-iotize-device-com-wifi",
-    "platforms": [
-      "android",
-      "ios"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iotize-sas/device-com-wifi.cordova.git"
-  },
-  "private": false,
-  "author": "IoTize",
-  "license": "MIT",
-  "description": "IoTize Cordova plugin for Wifi devices",
-  "bugs": {
-    "url": "https://github.com/iotize-sas/device-com-wifi.cordova/issues"
-  },
-  "engines": {
-    "cordovaDependencies": {
-      "3.0.0": {
-        "cordova-android": ">=5.0.0"
-      }
+    "name": "@iotize/device-com-wifi.cordova",
+    "version": "2.0.0-alpha.1",
+    "main": "./dist/index.js",
+    "cordova": {
+        "id": "cordova-plugin-iotize-device-com-wifi",
+        "platforms": [
+            "android",
+            "ios"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iotize-sas/device-com-wifi.cordova.git"
+    },
+    "private": false,
+    "author": "IoTize",
+    "license": "MIT",
+    "description": "IoTize Cordova plugin for Wifi devices",
+    "bugs": {
+        "url": "https://github.com/iotize-sas/device-com-wifi.cordova/issues"
+    },
+    "engines": {
+        "cordovaDependencies": {
+            "3.0.0": {
+                "cordova-android": ">=5.0.0"
+            }
+        }
+    },
+    "scripts": {
+        "build": "npm run clean && npm run build:ts && npm run build:webpack",
+        "watch": "tsc -p ./tsconfig.lib.json -w",
+        "build:ts": "tsc -p ./tsconfig.lib.json",
+        "build:webpack": "webpack --config webpack.config.js",
+        "clean": "rm -rf ./dist/*",
+        "test": "npm run test:unit",
+        "test:unit": "mocha --recursive src/www/**/*.spec.ts",
+        "scan-devices": "dns-sd -B _tapm2m"
+    },
+    "homepage": "https://github.com/iotize-sas/device-com-wifi.cordova#readme",
+    "keywords": [
+        "ecosystem:cordova",
+        "cordova-android",
+        "cordova-ios",
+        "iotize",
+        "wifi"
+    ],
+    "devDependencies": {
+        "@iotize/device-client.js": "0.0.1-alpha.100",
+        "@types/chai": "^4.2.0",
+        "@types/debug": "^4.1.5",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.7.2",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "bonjour": "^3.5.0",
+        "chai": "^4.2.0",
+        "compression-webpack-plugin": "^3.0.0",
+        "cordova": "^5.0.0",
+        "mocha": "^6.2.0",
+        "mochawesome": "^4.1.0",
+        "rxjs": "^6.5.2",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "webpack": "^4.39.2",
+        "webpack-bundle-analyzer": "^3.4.1",
+        "webpack-cli": "^3.3.7",
+        "webpack-rxjs-externals": "^2.0.0"
+    },
+    "dependencies": {},
+    "peerDependencies": {
+        "@iotize/common.js": "1.0.0-alpha.1",
+        "@iotize/device-client.js": "1.0.0-alpha.5",
+        "rxjs": "^6.0.0"
     }
-  },
-  "scripts": {
-    "build": "npm run clean && npm run build:ts && npm run build:webpack",
-    "watch": "tsc -p ./tsconfig.lib.json -w",
-    "build:ts": "tsc -p ./tsconfig.lib.json",
-    "build:webpack": "webpack --config webpack.config.js",
-    "clean": "rm -rf ./dist/*",
-    "test": "npm run test:unit",
-    "test:unit": "mocha --recursive src/www/**/*.spec.ts",
-    "scan-devices": "dns-sd -B _tapm2m"
-  },
-  "homepage": "https://github.com/iotize-sas/device-com-wifi.cordova#readme",
-  "keywords": [
-    "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios",
-    "iotize",
-    "wifi"
-  ],
-  "devDependencies": {
-    "@iotize/device-client.js": "0.0.1-alpha.100",
-    "@types/chai": "^4.2.0",
-    "@types/debug": "^4.1.5",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "bonjour": "^3.5.0",
-    "chai": "^4.2.0",
-    "compression-webpack-plugin": "^3.0.0",
-    "cordova": "^5.0.0",
-    "mocha": "^6.2.0",
-    "mochawesome": "^4.1.0",
-    "rxjs": "^6.5.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.39.2",
-    "webpack-bundle-analyzer": "^3.4.1",
-    "webpack-cli": "^3.3.7",
-    "webpack-rxjs-externals": "^2.0.0"
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "@iotize/common.js": "1.0.0-alpha.1",
-    "@iotize/device-client.js": "1.0.0-alpha.1",
-    "rxjs": "^6.0.0"
-  }
 }
