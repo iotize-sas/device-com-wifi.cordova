@@ -68,8 +68,8 @@
     },
     "dependencies": {},
     "peerDependencies": {
-        "@iotize/common.js": "1.0.0-alpha.1",
         "@iotize/device-client.js": "1.0.0-alpha.5",
+        "@iotize/common": "1.0.0-alpha.4",
         "rxjs": "^6.0.0"
     }
 }
