@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.spec.json",
+  "compilerOptions": {},
+  "include": [
+    "./src/www/*"
+  ],
+  "exclude": [
+  ]
+}
