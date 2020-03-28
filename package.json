@@ -1,6 +1,6 @@
 {
     "name": "@iotize/device-com-wifi.cordova",
-    "version": "2.0.0-alpha.1",
+    "version": "2.0.0-alpha.2",
     "main": "./dist/index.js",
     "cordova": {
         "id": "cordova-plugin-iotize-device-com-wifi",
