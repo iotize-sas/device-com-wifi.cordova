@@ -10,11 +10,13 @@ export interface ServiceType {
     [key: string]: any
 }
 
+type ErrorCallback = (err: Error) => void;
+
 export interface ZeroConf {
-    reInit(success?: () => void, error?: (err: Error) => void): void;
-    unwatch(type: string, domain: string, success: () => void, error: (err: Error) => void): void;
+    reInit(success?: () => void, error?: ErrorCallback): void;
+    unwatch(type: string, domain: string, success?: () => void, error?: ErrorCallback): void;
     watch(type: string, domain: string, callack: (result: WatchResultType) => void): void;
-    close(): void;
+    close(success?: () => void, failure?: ErrorCallback): void;
     getHostname(callback: (callback: string) => void): void;
 }
 

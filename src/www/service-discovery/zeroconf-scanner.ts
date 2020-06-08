@@ -1,25 +1,27 @@
 import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/scanner/api';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { debug } from '../logger';
-import { ZeroConf } from './cordova-interface';
 import { CordovaNetworkScanResult } from '../definitions';
+import { debug } from '../logger';
+import { ServiceType, ZeroConf } from './cordova-interface';
 
 declare var cordova: any | undefined;
 
+const TAG = 'ZeroConfScannerCordova';
+
+const DEFAULT_STOP_TIMEOUT = 10 * 1000;
 export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanResult> {
-    _hostname: string;
-    options = {
+    // _hostname: string;
+    private _services: CordovaNetworkScanResult[] = [];
+    private _services$ = new Subject<CordovaNetworkScanResult[]>();
+    private _isRunning = new BehaviorSubject<boolean>(false);
+    private zeroconf: ZeroConf;
+
+    constructor(public readonly options = {
         domain: 'local.',
         type: '_tapm2m._tcp.'
-    };
-    _services: CordovaNetworkScanResult[] = [];
-    _services$ = new Subject<CordovaNetworkScanResult[]>();
-    _isRunning = new BehaviorSubject<boolean>(false);
-    zeroconf?: ZeroConf;
-
-    constructor() {
-        if (typeof cordova != undefined && cordova && cordova.plugins) {
+    }) {
+        if (typeof cordova !== undefined && cordova && cordova.plugins) {
             this.zeroconf = cordova.plugins.zeroconf;
         }
         else {
@@ -51,24 +53,55 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
      * Start scan
      */
     start(option?: DeviceScannerOptions): Promise<void> {
-        debug('ZeroConfScanner', 'start');
+        debug(TAG, 'start');
+        this.init();
         return this._start();
     }
 
-    stop(): Promise<void> {
-        debug('ZeroConfScanner', 'stop', this.options);
-        // zeroconf.close()
+    /**
+     * Stop with timeout
+     */
+    async stop(options?: { timeout?: number }): Promise<void> {
+        this.unwatch().catch(err => { });
+        this.zeroconf.close();
+        this._isRunning.next(false);
+        // Zeroconf callback are never called
+        // return promiseTimeout(options?.timeout || DEFAULT_STOP_TIMEOUT, new Promise<void>((resolve, reject) => {
+        //     debug(TAG, 'stoping...', this.options);
+        //     this.zeroconf.close(() => {
+        //         debug(TAG, 'stopped');
+        //         this._isRunning.next(false);
+        //         resolve();
+        //     }, (err) => {
+        //         debug(TAG, 'stop error', err);
+        //         reject(err);
+        //     });
+        // }))
+        //     .catch(err => {
+        //         this._isRunning.next(false);
+        //         throw err;
+        //     });
+    }
+
+    /**
+     * Initialize/reinitialize scanner
+     */
+    init() {
+        debug(TAG, 'init zero conf...');
+        this.zeroconf.reInit();
+    }
+
+    private unwatch(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
+            debug(TAG, 'unwatching...');
             this.zeroconf.unwatch(
                 this.options.type
                 , this.options.domain
                 , () => {
-                    debug('unwatch stop', this.options);
-                    this._isRunning.next(false);
-                    this.zeroconf.reInit();
+                    debug(TAG, 'unwatch stop', this.options);
                     resolve();
                 }, (err) => {
-                    debug('unwatch error', err);
+                    debug(TAG, 'unwatch error', this.options, err);
                     reject(err);
                 });
         });
@@ -94,17 +127,17 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
             debug('Zero conf watch: ', this.options);
             this.zeroconf.watch(this.options.type, this.options.domain, (result) => {
                 debug('Zero conf result', result);
-                var action = result.action;
-                var service = result.service;
+                const action = result.action;
+                const service = result.service;
                 if (service) {
                     switch (action) {
                         case 'added':
                             break;
                         case 'resolved':
-                            this._onServiceResolved(service);
+                            this._onServiceResolved(resolveHost(service));
                             break;
                         default:
-                            this._removeService(service);
+                            this._removeService(resolveHost(service));
                     }
                 }
             });
@@ -117,7 +150,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
     }
 
     private _removeService(service: CordovaNetworkScanResult) {
-        let existsingIndex = this._findServiceIndex(service);
+        const existsingIndex = this._findServiceIndex(service);
         if (existsingIndex >= 0) {
             this._services.splice(existsingIndex, 1);
         }
@@ -125,7 +158,7 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
     }
 
     private _findServiceIndex(service: CordovaNetworkScanResult) {
-        return this._services.findIndex((s2) => JSON.stringify(s2) == JSON.stringify(service));
+        return this._services.findIndex((s2) => JSON.stringify(s2) === JSON.stringify(service));
     }
 
     private _onServiceResolved(service: CordovaNetworkScanResult) {
@@ -134,5 +167,13 @@ export class ZeroConfScannerCordova implements DeviceScanner<CordovaNetworkScanR
             debug('Emit new results: ', this._services);
             this._services$.next(this._services);
         }
+    }
+}
+
+function resolveHost(input: ServiceType): CordovaNetworkScanResult {
+    const host = input.ipv4Addresses && input.ipv4Addresses.length > 0 ? input.ipv4Addresses[0] : undefined;
+    return {
+        ...input,
+        host
     }
 }

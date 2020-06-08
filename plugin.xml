@@ -17,9 +17,8 @@
     </js-module>
 
     <!-- ES6 promise polyfill -->
-    <!-- <dependency id="es6-promise-plugin" version="4.1.0" /> -->
-    <!-- <dependency id="com.scott.serviceDiscovery" version="0.2.0" /> cordova-plugin-discovery -->
-    <dependency id="cordova-plugin-zeroconf" version="1.4.0" /> 
+    <dependency id="es6-promise-plugin" version="4.1.0" />
+    <dependency id="cordova-plugin-zeroconf" version="1.4.2" /> 
     
 
     <!-- android -->

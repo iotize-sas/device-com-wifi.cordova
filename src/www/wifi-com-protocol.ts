@@ -13,6 +13,13 @@ export class WifiComProtocol extends QueueComProtocol {
     private _socketProtocol?: ComProtocol;
     private subProtocolConnectionStateSub?: Subscription;
 
+    private get socketProtocol(): ComProtocol {
+        if (!this._socketProtocol) {
+            throw new Error(`Protocol is not connected yet`); // TODO proper error code
+        }
+        return this._socketProtocol;
+    }
+
     constructor(public wifiOptions: WifiComProtocolOptions, public createSubProtocol: (options: WifiComProtocolOptions) => ComProtocol | Promise<ComProtocol>) {
         super();
     }
@@ -21,9 +28,10 @@ export class WifiComProtocol extends QueueComProtocol {
         return Observable.create(async (emitter: Subscriber<any>) => {
             try {
                 if (this.wifiOptions.network) {
-                    let currentSSID = await WifiWizard2.getConnectedSSID();
+                    const currentSSID = await WifiWizard2.getConnectedSSID();
                     if (currentSSID !== this.wifiOptions.network.SSID) {
-                        debug('currently connected to', currentSSID, 'expected ', this.wifiOptions.network.SSID, '=> try to connect to ', this.wifiOptions.network);
+                        debug('currently connected to', currentSSID, 'expected ',
+                            this.wifiOptions.network.SSID, '=> try to connect to ', this.wifiOptions.network);
                         await WifiWizard2.connect(
                             this.wifiOptions.network.SSID,
                             false,
@@ -68,13 +76,11 @@ export class WifiComProtocol extends QueueComProtocol {
     }
 
     write(data: Uint8Array): Promise<any> {
-        // TODO check _socketProtocol
-        return this._socketProtocol.write(data);
+        return this.socketProtocol.write(data);
     }
 
     read(): Promise<Uint8Array> {
-        // TODO check _socketProtocol
-        return this._socketProtocol.read();
+        return this.socketProtocol.read();
     }
 
 }
