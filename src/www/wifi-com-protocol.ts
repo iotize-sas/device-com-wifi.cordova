@@ -5,6 +5,7 @@ import { share } from 'rxjs/operators';
 
 import { CordovaInterface } from './cordova-interface';
 import { WifiComProtocolOptions } from './definitions';
+import { WifiComProtocolError } from './errors';
 import { debug } from './logger';
 
 declare var WifiWizard2: CordovaInterface;
@@ -28,19 +29,24 @@ export class WifiComProtocol extends QueueComProtocol {
         return Observable.create(async (emitter: Subscriber<any>) => {
             try {
                 if (this.wifiOptions.network) {
-                    const currentSSID = await WifiWizard2.getConnectedSSID();
+                    let currentSSID = await WifiWizard2.getConnectedSSID();
                     if (currentSSID !== this.wifiOptions.network.SSID) {
                         debug('currently connected to', currentSSID, 'expected ',
                             this.wifiOptions.network.SSID, '=> try to connect to ', this.wifiOptions.network);
                         await WifiWizard2.connect(
                             this.wifiOptions.network.SSID,
-                            false,
+                            true,
                             this.wifiOptions.network.password,
                             this.wifiOptions.network.algorithm,
                             this.wifiOptions.network.hidden
-                        )
+                        );
+                        currentSSID = await WifiWizard2.getConnectedSSID();
+                        if (currentSSID !== this.wifiOptions.network.SSID) {
+                            emitter.error(WifiComProtocolError.cannotConnectToNetwork(this.wifiOptions.network));
+                            return;
+                        }
+                        debug('now connected to SSID', currentSSID);
                     }
-                    debug('connected to SSID', currentSSID);
                 }
                 debug('Now creating socket protocol with options', this.wifiOptions);
                 this._socketProtocol = await this.createSubProtocol(this.wifiOptions);
@@ -53,12 +59,22 @@ export class WifiComProtocol extends QueueComProtocol {
                 emitter.complete();
             }
             catch (err) {
-                // CONNECT_FAILED_TIMEOUT
-                // WIFI_NOT_ENABLED
-                // TODO add wrapper and user friendly message for different error codes
+                if (this.wifiOptions.network) {
+                    switch (err) {
+                        case 'CONNECT_FAILED_TIMEOUT':
+                            err = WifiComProtocolError.connectFailedTimeout(this.wifiOptions.network);
+                            break;
+                        case 'WIFI_NOT_ENABLED':
+                            err = WifiComProtocolError.wifiNotEnabled(this.wifiOptions.network);
+                            break;
+                    }
+                }
+                if (typeof err === "string") {
+                    err = WifiComProtocolError.unknownError(new Error(err), this.wifiOptions.network);
+                }
                 if (this.subProtocolConnectionStateSub) this.subProtocolConnectionStateSub.unsubscribe();
                 debug('_connect error', err);
-                emitter.error(typeof err === "string" ? new Error(err) : err); // TODO proper error
+                emitter.error(err);
             }
         })
             .pipe(
