@@ -14,7 +14,7 @@
         "url": "git+https://github.com/iotize-sas/device-com-wifi.cordova.git"
     },
     "private": false,
-    "author": "IoTize",
+    "author": "IoTize <contact@iotize.com>",
     "license": "http://www.apache.org/licenses/LICENSE-2.0",
     "description": "IoTize Cordova plugin for Wifi devices",
     "bugs": {
