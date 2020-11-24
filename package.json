@@ -1,6 +1,6 @@
 {
     "name": "@iotize/device-com-wifi.cordova",
-    "version": "2.0.0-alpha.2",
+    "version": "2.0.0",
     "main": "./dist/index.js",
     "cordova": {
         "id": "cordova-plugin-iotize-device-com-wifi",
@@ -46,7 +46,7 @@
         "wifi"
     ],
     "devDependencies": {
-        "@iotize/device-client.js": "0.0.1-alpha.100",
+        "@iotize/tap": "^2.0.0",
         "@types/chai": "^4.2.0",
         "@types/debug": "^4.1.5",
         "@types/mocha": "^5.2.7",
@@ -68,8 +68,8 @@
     },
     "dependencies": {},
     "peerDependencies": {
-        "@iotize/device-client.js": "1.0.0-alpha.8",
-        "@iotize/common": "^1.0.0",
+        "@iotize/tap": "2.0.0-alpha.1",
+        "@iotize/common": "^1.2.0",
         "rxjs": "^6.0.0"
     }
 }

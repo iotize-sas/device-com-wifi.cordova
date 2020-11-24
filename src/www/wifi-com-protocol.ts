@@ -1,5 +1,5 @@
-import { ComProtocol, ComProtocolConnectOptions, ComProtocolDisconnectOptions } from '@iotize/device-client.js/protocol/api';
-import { QueueComProtocol } from '@iotize/device-client.js/protocol/core';
+import { ComProtocol, ComProtocolConnectOptions, ComProtocolDisconnectOptions } from '@iotize/tap/protocol/api';
+import { QueueComProtocol } from '@iotize/tap/protocol/core';
 import { Observable, of, Subscriber, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 

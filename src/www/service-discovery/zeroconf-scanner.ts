@@ -1,4 +1,4 @@
-import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/scanner/api';
+import { DeviceScanner, DeviceScannerOptions } from '@iotize/tap/scanner/api';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { CordovaNetworkScanResult } from '../definitions';

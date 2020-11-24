@@ -2,7 +2,7 @@
 //  Copyright 2019 IoTize SAS Inc.  Licensed under the MIT license. 
 //
 import { promiseTimeout } from '@iotize/common/promise';
-import { DeviceScanner, DeviceScannerOptions } from '@iotize/device-client.js/scanner/api';
+import { DeviceScanner, DeviceScannerOptions } from '@iotize/tap/scanner/api';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { CordovaInterface, NetworkType } from './cordova-interface';
