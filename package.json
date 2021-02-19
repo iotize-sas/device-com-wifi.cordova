@@ -68,8 +68,8 @@
     },
     "dependencies": {},
     "peerDependencies": {
-        "@iotize/tap": "2.0.0-alpha.1",
-        "@iotize/common": "^1.2.0",
+        "@iotize/tap": "^2.0.0",
+        "@iotize/common": "1.3.0",
         "rxjs": "^6.0.0"
     }
 }
