@@ -7,3 +7,6 @@
 .idea/
 dist/
 *.tgz
+
+*.tmp.json
+test-reports

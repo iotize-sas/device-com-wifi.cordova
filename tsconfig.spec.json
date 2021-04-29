@@ -1,6 +1,11 @@
 {
-  "extends": "../../tsconfig.spec.json",
-  "compilerOptions": {},
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": [
+      "node", "mocha"
+    ]
+  },
   "include": [
     "./src/www/*"
   ],

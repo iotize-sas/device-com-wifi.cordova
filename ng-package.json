@@ -1,6 +1,6 @@
 {
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-    "dest": "../../dist/libs/@iotize/device-com-wifi.cordova",
+    "dest": "./dist/@iotize/device-com-wifi.cordova",
     "lib": {
         "entryFile": "src/public_api.ts"
     }
